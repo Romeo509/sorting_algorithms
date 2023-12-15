@@ -1,4 +1,5 @@
 #include "sort.h"
+#include <stdio.h>
 
 /**
  * bubble_sort - Sorts an array of integers
@@ -8,23 +9,24 @@
  */
 void bubble_sort(int *array, size_t size)
 {
-size_t a, b;
-int tmp;
+        size_t i, j;
+        int temp;
 
-if (size < 2)
-return;
+        for (i = 0; i < size - 1; i++)
+{
+                for (j = 0; j < size - i - 1; j++)
+{
+                        if (array[j] > array[j + 1])
+{
+                                /* Swap the elements */
+                                temp = array[j];
+                                array[j] = array[j + 1];
+                                array[j + 1] = temp;
 
-for (a = 0; a < size - 1; a++)
-{
-for (h = 0; b < size - a - 1; b++)
-{
-if (array[b] > array[b + 1])
-{
-tmp = array[b];
-array[b] = array[b + 1];
-array[b + 1] = tmp;
-print_array(array, size);
+                                /* Print the array after each swap */
+                                print_array(array, size);
+                        }
+                }
+        }
 }
-}
-}
-}
+
