@@ -1,70 +1,102 @@
 #include "sort.h"
 
 /**
- * swap_nodes - Swaps two nodes in a doubly linked list
- * @list: Pointer to the head of the doubly linked list
- * @node1: First node to swap
- * @node2: Second node to swap
+ * swap_node_ahead - function that swaps a node in a listint_t
+ * doubly-linked list list of integers with the node ahead of it.
+ *
+ * @head: pointer to the head of a doubly-linked list
+ * @tail: pointer to the tail of the doubly-linked list.
+ * @shaker: A pointer to the current swapping node of the cocktail shaker algo.
+ *
+ * Return: nothing
  */
-void swap_nodes(listint_t **list, listint_t *node1, listint_t *node2)
+void swap_node_ahead(listint_t **head, listint_t **tail, listint_t **shaker)
 {
-    if (!node1 || !node2)
-        return;
+listint_t *tmp = (*shaker)->next;
 
-    if (node1->prev)
-        node1->prev->next = node2;
-    else
-        *list = node2;
-
-    if (node2->next)
-        node2->next->prev = node1;
-
-    node1->next = node2->next;
-    node2->prev = node1->prev;
-    node1->prev = node2;
-    node2->next = node1;
+if ((*shaker)->prev != NULL)
+(*shaker)->prev->next = tmp;
+else
+*head = tmp;
+tmp->prev = (*shaker)->prev;
+(*shaker)->next = tmp->next;
+if (tmp->next != NULL)
+tmp->next->prev = *shaker;
+else
+*tail = *shaker;
+(*shaker)->prev = tmp;
+tmp->next = *shaker;
+*shaker = tmp;
 }
 
 /**
- * cocktail_sort_list - Sorts a doubly linked list using Cocktail Shaker Sort
- * @list: Pointer to the head of the doubly linked list
+ * swap_node_behind - function that swaps a node in a listint_t
+ * doubly-linked list of integers with the node behind it.
+ * @head: pointer to the head of a doubly-linked list of integers.
+ * @tail: pointer to the tail of the doubly-linked list.
+ * @shaker: A pointer to the current swapping node of the cocktail shaker algo.
+ *
+ * Return: nothing
  */
-void cocktail_sort_list(listint_t **list)
+void swap_node_behind(listint_t **head, listint_t **tail, listint_t **shaker)
 {
-    int swapped;
-    listint_t *current;
-    if (!list || !(*list) || !(*list)->next)
-        return;
+listint_t *tmp = (*shaker)->prev;
 
-   
+if ((*shaker)->next != NULL)
+(*shaker)->next->prev = tmp;
+else
+*tail = tmp;
+tmp->next = (*shaker)->next;
+(*shaker)->prev = tmp->prev;
+if (tmp->prev != NULL)
+tmp->prev->next = *shaker;
+else
+*head = *shaker;
+(*shaker)->next = tmp;
+tmp->prev = *shaker;
+*shaker = tmp;
+}
 
-    do
-    {
-        swapped = 0;
-        for (current = *list; current->next; current = current->next)
-        {
-            if (current->n > current->next->n)
-            {
-                swap_nodes(list, current, current->next);
-                print_list(*list);
-                swapped = 1;
-            }
-        }
+/**
+ * cocktail_sort_list - function that sorts a listint_t doubly-linked
+ * list of integers in ascending order
+ * @head: pointer to the head of a listint_t doubly-linked list.
+ *
+ * Return: nothing
+ */
+void cocktail_sort_list(listint_t **head) {
+listint_t *tail, *shaker;
+int shaken_not_stirred = 0;
 
-        if (!swapped)
-            break;
+if (head == NULL || *head == NULL || (*head)->next == NULL)
+return;
 
-        swapped = 0;
-        for (; current->prev; current = current->prev)
-        {
-            if (current->n < current->prev->n)
-            {
-                swap_nodes(list, current->prev, current);
-                print_list(*list);
-                swapped = 1;
-            }
-        }
+for (tail = *head; tail->next != NULL;)
+tail = tail->next;
 
-    } while (swapped);
+/* Main loop for the Cocktail Shaker Sort */
+while (shaken_not_stirred == 0) {
+shaken_not_stirred = 1;
+
+/* Forward pass */
+for (shaker = *head; shaker != tail; shaker = shaker->next)
+{
+if (shaker->n > shaker->next->n) {
+swap_node_ahead(head, &tail, &shaker);
+print_list((const listint_t *)*head);
+shaken_not_stirred = 0;
+}
+}
+
+/* Backward pass */
+for (shaker = shaker->prev; shaker != *head;
+shaker = shaker->prev) {
+if (shaker->n < shaker->prev->n) {
+swap_node_behind(head, &tail, &shaker);
+print_list((const listint_t *)*head);
+shaken_not_stirred = 0;
+}
+}
+}
 }
 
