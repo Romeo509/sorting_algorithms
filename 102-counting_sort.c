@@ -2,11 +2,10 @@
 
 /**
  * get_max - Get the maximum value
- * in a list .
- * @array: list of integers.
+ * @array: The array to be sorted
  * @size: size of the array.
  *
- * Return: maximum integer .
+ * Return: maximum integer.
  */
 int get_max(int *array, int size)
 {
@@ -22,13 +21,9 @@ int get_max(int *array, int size)
 }
 
 /**
- * counting_sort - Sort an array
- * using the counting sort algorithm.
- * @array: An array .
- * @size: The size of the array.
- *
- * Description: Returns the counting array
- * after sorting.
+ * counting_sort - Sorts an array of integers using Counting sort algorithm
+ * @array: The array to be sorted
+ * @size: Size of the array
  */
 void counting_sort(int *array, size_t size)
 {
