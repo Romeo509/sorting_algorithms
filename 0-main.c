@@ -3,9 +3,15 @@
 #include "sort.h"
 
 /**
- * main - Entry point
+ * main - Entry point for sorting an array using the bubble sort algorithm.
  *
- * Return: Always 0
+ * The program initializes an array of integers and sorts it using bubble sort,
+ * a simple comparison-based sorting algorithm. Bubble sort repeatedly steps 
+ * through the list, compares adjacent elements, and swaps them if they are in 
+ * the wrong order. This process continues until the entire list is sorted. The 
+ * array is printed before and after sorting to show the difference.
+ *
+ * Return: Always 0 (Success).
  */
 int main(void)
 {
